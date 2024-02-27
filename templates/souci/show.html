@@ -1,0 +1,63 @@
+{% load static %}
+<!doctype html>
+<html>
+    <!-- {% block content %} -->
+    <head>
+        <title>Show</title>
+        <!-- <meta charset="utf-8">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="module" src="{% static 'js/show.js' %}"></script> -->
+    </head>
+    <body>
+        {% if image %}
+            <img src="{{ image.image.url }}" alt="Captured Image">
+        {% else %}
+            <p>No image available</p>
+        {% endif %}
+        <script>
+            // Log the image_extract JSON data to the console
+            var imageExtract = {{ image_extract |safe }};
+            console.log("Image Extract:", imageExtract );
+
+            
+
+            var extractDiv = document.createElement('div');
+            extractDiv.id = 'imageExtractData';
+
+            extractDiv.innerHTML = '<h2>Image Extract Data</h2>';
+
+            var blocks = imageExtract['pages'][0]['blocks'];
+
+            for (let ind = 0; ind < blocks.length; ind++) {
+                //each block has geometry, lines, artefacts
+                var lines = blocks[ind]['lines'] //an array
+
+                //create div for each block, p for each line
+                blockDiv = document.createElement('div');
+                blockDiv.class = 'block';
+
+                for (let idx = 0; idx < lines.length; idx++) {
+                    //each line has geometry, words
+                    var line_str = ''
+                    var words = lines[idx]['words']
+                    for (let wdx = 0; wdx < words.length; wdx++) {
+                        // each word has value, confidence, geometry
+                        line_str = line_str.concat(" ", words[wdx]['value'])
+                    }
+
+                    //add line to block div
+                    var lineElement = document.createElement('p');
+                    lineElement.textContent = line_str;
+                    blockDiv.appendChild(lineElement);
+                }
+
+                //add block div to extractDiv
+                extractDiv.appendChild(blockDiv)
+            }
+
+            document.body.appendChild(extractDiv);
+        </script>
+    </body>
+    <!-- {% endblock %} -->
+</html>

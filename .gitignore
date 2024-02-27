@@ -1,0 +1,41 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+
+# Virtual environment
+.env 
+.venv 
+env/ 
+venv/ 
+ENV/
+
+# IDE files
+.vscode/
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history
+
+# Django migration files
+/migrations/
+
+# Static files directory (if configured differently)
+/static/
+
+# Media files directory (if configured differently)
+/media/
+
+# SQLite database (if using SQLite, otherwise adjust for other databases)
+*.sqlite3
+
+# Log files
+*.log
+
+# Temporary files
+*.swp
+*~
