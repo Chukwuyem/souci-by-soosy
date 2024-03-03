@@ -1,10 +1,10 @@
-import styles from './header.module.css';
+import '../../app/globals.css'
 
 export default function Header() {
 
     return (
-        <div className={styles.header}>
-            <h1>Souci</h1>
-        </div>
+        <header className="bg-gray-800 text-white py-4">
+            <div className="container mx-auto">Souci</div>
+        </header>
     );
 }

@@ -26,19 +26,12 @@ export async function POST(req: Request) {
       withCredentials: true
     })
     .then(function(response) {
-      console.log('Response from django backend: ', response.data);
-      console.log('Response status from django backend: ', response.status);
-      const imageUrl = response.data["image_name"]
-      const imageUrlb64 = response.data["image_name_b64"]
-      console.log(imageUrl)
-      console.log("this is req.url", req.url)
+      // console.log('Response from django backend: ', response.data);
+      // console.log('Response status from django backend: ', response.status);
+      // const imageUrl = response.data["image_name"]
+      // const imageUrlb64 = response.data["image_name_b64"]
+      // console.log(imageUrl)
       return NextResponse.json(response.data, {status: response.status});
-
-      const displayUrl = new URL('/display', req.url)
-      displayUrl.searchParams.set('image', imageUrlb64)
-      console.log("is this display url", displayUrl)
-      //return NextResponse.redirect(displayUrl)
-      //redirect()
     })
     .catch(function(error) {
       console.log('Error sending image data to django backend:', error);

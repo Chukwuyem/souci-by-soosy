@@ -28,8 +28,11 @@ def get_csrf_token(request):
 
 @csrf_exempt
 def display(request, image_name):
+    print("this is image_Name", image_name)
     if request.method == 'GET':
         try:
+            image_name = base64.urlsafe_b64decode(image_name).decode()
+            print("this is image name url re-decoded", image_name)
             image = Image.objects.get(title = image_name)
             image_extract = ocr_extract(image.image.path)
 
@@ -38,7 +41,7 @@ def display(request, image_name):
                 image_data = base64.b64encode(image_file.read()).decode('utf-8')
 
             # Return success respnse
-            return JsonResponse({'success': True, 'image_data': json.dumps(image_data), 'image_extract': json.dumps(image_extract)})
+            return JsonResponse({'success': True, 'image_data': image_data, 'image_extract': json.dumps(image_extract)})
         except Image.DoesNotExist:
             return JsonResponse({'error': 'Image not found'})
     else:
@@ -65,8 +68,6 @@ def extract(request): #for nextjs frontend
 
             image_name_b64 = base64.urlsafe_b64encode(image_name.encode()).decode()
             print("this is image name url encoded", image_name_b64)
-            image_name_b64_decoded = base64.urlsafe_b64decode(image_name_b64)
-            print("this is image name url re-decoded", image_name_b64_decoded)
 
             # Return success response
             return JsonResponse({'success': True, 'image_name': image_name, 'image_name_b64': image_name_b64})
