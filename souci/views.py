@@ -41,7 +41,7 @@ def display(request, image_name):
                 image_data = base64.b64encode(image_file.read()).decode('utf-8')
 
             # Return success respnse
-            return JsonResponse({'success': True, 'image_data': image_data, 'image_extract': json.dumps(image_extract)})
+            return JsonResponse({'success': True, 'image_data': image_data, 'image_extract': image_extract})
         except Image.DoesNotExist:
             return JsonResponse({'error': 'Image not found'})
     else:

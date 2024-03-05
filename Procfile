@@ -1,0 +1,1 @@
+web: gunicorn souci-by-soosy.wsgi --log-file -
