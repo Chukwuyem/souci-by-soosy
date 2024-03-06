@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  web:
+    image: chukwuyemdocker/souci-by-soosy:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=souci-by-soosy.settings
+      - SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DEBUG=False
+      - ALLOWED_HOSTS=127.0.0.1,localhost
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+
+volumes:
+  static_volume:
+  media_volume:
