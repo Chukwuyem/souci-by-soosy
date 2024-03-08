@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Image
-from .utils import ocr_extract
+from .utils import paddleocr_extract
 import datetime
 from django.core.files import File
 from django.core.files.base import ContentFile
@@ -98,7 +98,7 @@ def capture(request): #for django frontend
 def show(request):
     try:
         image = Image.objects.last()
-        image_extract = ocr_extract(image.image.path)
+        image_extract = paddleocr_extract(image.image.path)
     except Image.DoesNotExist:
         raise Http404("No images found")
     return render(request, 'souci/show.html', {'image': image, 'image_extract': json.dumps(image_extract)})

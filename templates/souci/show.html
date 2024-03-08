@@ -20,40 +20,44 @@
             var imageExtract = {{ image_extract |safe }};
             console.log("Image Extract:", imageExtract );
 
-            
+            for (let index = 0; index < imageExtract.length; index++) {
+                const element = imageExtract[index];
+                for (let idx = 0; idx < element.length; idx++) {
+                    console.log(element[idx])
+                    
+                }
+            }            
 
             var extractDiv = document.createElement('div');
             extractDiv.id = 'imageExtractData';
 
             extractDiv.innerHTML = '<h2>Image Extract Data</h2>';
 
-            var blocks = imageExtract['pages'][0]['blocks'];
+            //var blocks = imageExtract['pages'][0]['blocks'];
 
-            for (let ind = 0; ind < blocks.length; ind++) {
-                //each block has geometry, lines, artefacts
-                var lines = blocks[ind]['lines'] //an array
+            imageExtractData = imageExtract[0]
+            for (let index = 0; index < imageExtractData.length; index++) {
+                console.log("loop check")
+            
+                const Recog = imageExtractData[index][1]
+                console.log("this is Recog ", Recog)
 
-                //create div for each block, p for each line
-                blockDiv = document.createElement('div');
-                blockDiv.class = 'block';
 
-                for (let idx = 0; idx < lines.length; idx++) {
-                    //each line has geometry, words
-                    var line_str = ''
-                    var words = lines[idx]['words']
-                    for (let wdx = 0; wdx < words.length; wdx++) {
-                        // each word has value, confidence, geometry
-                        line_str = line_str.concat(" ", words[wdx]['value'])
-                    }
+                const word = Recog[0]
+                const confidence = Recog[1]
 
-                    //add line to block div
-                    var lineElement = document.createElement('p');
-                    lineElement.textContent = line_str;
-                    blockDiv.appendChild(lineElement);
-                }
+                lineDiv = document.createElement('div');
+                lineDiv.class = 'block';
 
-                //add block div to extractDiv
-                extractDiv.appendChild(blockDiv)
+                wordElement = document.createElement('p');
+                wordElement.textContent = word
+                lineDiv.appendChild(wordElement);
+
+                confidElement = document.createElement('p');
+                confidElement.textContent = confidence.toString();
+                lineDiv.appendChild(confidElement);
+                
+                extractDiv.appendChild(lineDiv)
             }
 
             document.body.appendChild(extractDiv);
