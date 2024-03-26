@@ -34,7 +34,7 @@ def display(request, image_name):
             image_name = base64.urlsafe_b64decode(image_name).decode()
             print("this is image name url re-decoded", image_name)
             image = Image.objects.get(title = image_name)
-            image_extract = ocr_extract(image.image.path)
+            image_extract = paddleocr_extract(image.image.path)
 
             #get image as base64 encoded string
             with open(image.image.path, "rb") as image_file:

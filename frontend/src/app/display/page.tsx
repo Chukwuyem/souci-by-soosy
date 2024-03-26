@@ -31,7 +31,7 @@ export default function DisplayPage() {
             })
             .then(function(response) {
                 setImageB64(response.data["image_data"]);
-                setImageExtract(response.data["image_extract"]);
+                setImageExtract(response.data["image_extract"][0]);
                 setImageLoaded(true);
                 console.log("this is response ", response.data);
             })
@@ -52,33 +52,6 @@ export default function DisplayPage() {
     
 
     return (
-        // <main>
-        //     <div>
-        //     <h1>This is the Display Page</h1>
-        //     {isImageLoaded ? (
-        //             <img src={`data:image/jpeg;base64,${ImageB64}`} alt="Image" /> // Display image
-        //         ) : (
-        //             <div style={{ width: '400px', height: '400px', backgroundColor: 'lightgray' }}></div> // Blank div as placeholder
-        //     )}
-        //     {/* {ImageB64 && <img src={`data:image/jpeg;base64,${ImageB64}`} alt="Image" />} */}
-        //     </div>
-        //     <div>
-        //     {isImageLoaded ? (
-        //         <div>
-        //             <h2>Image Extract Data</h2>
-        //             {ImageExtract.pages?.length > 0 && ImageExtract.pages[0].blocks.map((block: any, index: any) => (
-        //                 <div key={index} className="block">
-        //                     {block.lines.map((line: any, idx: any) => (
-        //                         <p key={idx}>{line.words.map((word: { value: any }) => word.value).join(' ')}</p>
-        //                     ))}
-        //                 </div>
-        //             ))}
-        //         </div>
-        //     ) : (
-        //         <div></div>
-        //     )}
-        //     </div>
-        // </main>
         <main className="flex flex-col items-center gap-8">
             <div className="text-center">
                 <h1 className="text-2xl font-bold">This is the Display Page</h1>
@@ -92,13 +65,18 @@ export default function DisplayPage() {
                 {isImageLoaded && (
                     <div>
                         <h2 className="text-lg font-semibold">Image Extract Data</h2>
-                        {ImageExtract.pages?.length > 0 && ImageExtract.pages[0].blocks.map((block: any, index: any) => (
-                            <div key={index} className="block">
-                                {block.lines.map((line: any, idx: any) => (
-                                    <p key={idx}>{line.words.map((word: { value: any }) => word.value).join(' ')}</p>
-                                ))}
+                        {ImageExtract ? (
+                            ImageExtract.length > 0 && ImageExtract.map((page: any, pageIndex: any) => (
+                            <div key={pageIndex} className="block">
+                                <p key={pageIndex + '_word'}>{page[1][0]}</p>
+                                <p key={pageIndex + '_confidence'}>{page[1][1]}</p>
+                                
                             </div>
-                        ))}
+                            ))
+                            ) : (
+                                <p>No text to extract</p>
+                            )
+                        }
                     </div>
                 )}
             </div>

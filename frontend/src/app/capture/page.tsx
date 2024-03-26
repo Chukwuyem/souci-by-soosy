@@ -108,7 +108,7 @@ export default function CapturePage() {
         imageData: imageUrl
       })
       .then(function(response) {
-        console.log('Response from nextjs backend:', response);
+        //console.log('Response from nextjs backend:', response);
         router.push(`/display?image=${response.data["image_name_b64"]}`);
       })
       .catch(function(error) {
@@ -119,7 +119,6 @@ export default function CapturePage() {
 
 
   return (
-
     <main className="flex-grow">
         <div className="container mx-auto p-4 flex flex-col md:flex-row">
           <div className="w-full md:w-1/2 mb-4 md:mb-0">
